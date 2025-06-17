@@ -1,0 +1,47 @@
+<script
+    src="https://static.meteoblue.com/cdn/mapbox-gl-js/v1.11.1/mapbox-gl.js"
+    integrity="sha512-v5PfWsWi47/AZBVL7WMNqdbM1OMggp9Ce408yX/X9wg87Kjzb1xqpO2Ul0Oue8Vl9kKOcwPM2MWWkTbUjRxZOg=="
+    crossorigin="anonymous"
+></script>
+
+<link
+    rel="stylesheet"
+    href="https://static.meteoblue.com/cdn/mapbox-gl-js/v1.11.1/mapbox-gl.css"
+    integrity="sha512-xY1TAM00L9X8Su9zNuJ8nBZsGQ8IklX703iq4gWnsw6xCg+McrHXEwbBkNaWFHSqmf6e7BpxD6aJQLKAcsGSdA=="
+    crossorigin="anonymous"
+>
+
+<script src="https://static.meteoblue.com/lib/maps-plugin/v0.x/maps-plugin.js"></script>
+
+<style>
+    #mapContainer {
+        height: 500px;
+        width: 100%;
+    }
+</style>
+
+<div id="mapContainer"></div>
+
+<script>
+    const mapboxMap = new mapboxgl.Map({
+        container: "mapContainer",
+        center: [7.57327 , 47.5584],
+        zoom: 5,
+        minZoom: 0,
+        maxZoom: 24,
+        hash: false,
+        attributionControl: false,
+        keyboard: false,
+        maxBounds: [ [-71.522001,-28.908091], [-71.431335,-28.850945] ],
+    });
+
+    const apiKey = "CoNOYmRQEU5Xnsr7";
+    const inventoryUrl = "https://maps-api.meteoblue.com/v1/map/inventory/filter?lang=es&apikey=CoNOYmRQEU5Xnsr7&maps=windAnimation,radar,cloudsAndPrecipitation,temperature,wind,gust,humidity,precipitationProbability&temperatureUnit=CELSIUS&velocityUnit=METER_PER_SECOND&lengthUnit=metric&overlays=pressure2mOverlay,graticuleOverlay";
+
+    new meteoblueMapsPlugin({
+        mapboxMap: mapboxMap,
+        inventory: inventoryUrl,
+        apiKey: apiKey,
+        canUseRestricted: true,
+    });
+</script>
