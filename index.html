@@ -1,108 +1,111 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Wind Turbines Map</title>
-  <script
-    src="https://static.meteoblue.com/cdn/mapbox-gl-js/v1.11.1/mapbox-gl.js"
-    integrity="sha512-v5PfWsWi47/AZBVL7WMNqdbM1OMggp9Ce408yX/X9wg87Kjzb1xqpO2Ul0Oue8Vl9kKOcwPM2MWWkTbUjRxZOg=="
-    crossorigin="anonymous"
-  ></script>
-  <link
-    rel="stylesheet"
-    href="https://static.meteoblue.com/cdn/mapbox-gl-js/v1.11.1/mapbox-gl.css"
-    integrity="sha512-xY1TAM00L9X8Su9zNuJ8nBZsGQ8IklX703iq4gWnsw6xCg+McrHXEwbBkNaWFHSqmf6e7BpxD6aJQLKAcsGSdA=="
-    crossorigin="anonymous"
-  />
-  <script src="https://static.meteoblue.com/lib/maps-plugin/v0.x/maps-plugin.js"></script>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-    }
-    #mapContainer {
-      height: 100%;
-      width: 100%;
-    }
-    .custom-marker {
-      background-image: url("https://www.svgrepo.com/show/489975/wind-turbine.svg");
-      background-size: contain;
-      background-repeat: no-repeat;
-      width: 36px;
-      height: 36px;
-      cursor: pointer;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>San Juan Wind Farm - Meteoblue Map</title>
+
+  <!-- Mapbox GL -->
+  <script
+    src="https://static.meteoblue.com/cdn/mapbox-gl-js/v1.11.1/mapbox-gl.js"
+    integrity="sha512-v5PfWsWi47/AZBVL7WMNqdbM1OMggp9Ce408yX/X9wg87Kjzb1xqpO2Ul0Oue8Vl9kKOcwPM2MWWkTbUjRxZOg=="
+    crossorigin="anonymous"
+  ></script>
+  <link
+    rel="stylesheet"
+    href="https://static.meteoblue.com/cdn/mapbox-gl-js/v1.11.1/mapbox-gl.css"
+    integrity="sha512-xY1TAM00L9X8Su9zNuJ8nBZsGQ8IklX703iq4gWnsw6xCg+McrHXEwbBkNaWFHSqmf6e7BpxD6aJQLKAcsGSdA=="
+    crossorigin="anonymous"
+  />
+
+  <!-- Meteoblue Plugin -->
+  <script src="https://static.meteoblue.com/lib/maps-plugin/v0.x/maps-plugin.js"></script>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    #mapContainer {
+      height: 100%;
+      width: 100%;
+    }
+    .custom-marker {
+      background-image: url("https://www.svgrepo.com/show/489975/wind-turbine.svg");
+      background-size: contain;
+      background-repeat: no-repeat;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  <div id="mapContainer"></div>
-  <script>
-    const mapboxMap = new mapboxgl.Map({
-      container: "mapContainer",
-      center: [-71.48, -28.88],
-      zoom: 12,
-      minZoom: 0,
-      maxZoom: 24,
-      hash: false,
-      attributionControl: false,
-      keyboard: false,
-      maxBounds: [[-71.522001, -28.908091], [-71.431335, -28.850945]],
-    });
+  <div id="mapContainer"></div>
 
-    const apiKey = "CoNOYmRQEU5Xnsr7";
-    const inventoryUrl = "https://maps-api.meteoblue.com/v1/map/inventory/filter?lang=es&apikey=CoNOYmRQEU5Xnsr7&maps=windAnimation,radar,cloudsAndPrecipitation,temperature,wind,gust,humidity,precipitationProbability&temperatureUnit=CELSIUS&velocityUnit=METER_PER_SECOND&lengthUnit=metric&overlays=pressure2mOverlay,graticuleOverlay";
+  <script>
+    const mapboxMap = new mapboxgl.Map({
+      container: "mapContainer",
+      center: [-71.4889799054946,-28.8761178485962],
+      zoom: 10,
+      minZoom: 0,
+      maxZoom: 24,
+      hash: true,
+      attributionControl: false,
+      keyboard: false,
+      maxBounds: [ [-71.522001,-28.908091], [-71.431335,-28.850945] ]
+    });
 
-    new meteoblueMapsPlugin({
-      mapboxMap: mapboxMap,
-      inventory: inventoryUrl,
-      apiKey: apiKey,
-      canUseRestricted: true,
-    });
+    const apiKey = "CoNOYmRQEU5Xnsr7";
+    const inventoryUrl = "https://maps-api.meteoblue.com/v1/map/inventory/filter?lang=es&apikey=CoNOYmRQEU5Xnsr7&maps=windAnimation,satellite,radar,cloudsAndPrecipitation,temperature,wind,gust,humidity,warningsAndRisk&temperatureUnit=CELSIUS&velocityUnit=METER_PER_SECOND&lengthUnit=metric&overlays=pressure2mOverlay,graticuleOverlay";
 
-    const turbineCoordinates = [
-      [-71.5002344203355,-28.8889725800772], [-71.4975960009844,-28.8905191092847],
-      [-71.4949173777153,-28.8921024206848], [-71.4922360847697,-28.8935774729054],
-      [-71.4896053019279,-28.8950244760898], [-71.4869424120258,-28.8964178943493],
-      [-71.4841103370868,-28.8975978667642], [-71.4805479601135,-28.897816909334],
-      [-71.4776448527838,-28.8986011091843], [-71.4747510885881,-28.8993489899915],
-      [-71.4718897313291,-28.9001683879492], [-71.4689755918059,-28.9009255434661],
-      [-71.4660059008111,-28.9015032226647], [-71.4628799434322,-28.9011093605091],
-      [-71.4598746358376,-28.9006139823262], [-71.4569366226783,-28.8999278530416],
-      [-71.4539217566853,-28.8994595784133], [-71.4508760970803,-28.8994248358158],
-      [-71.4478150199417,-28.8996068247961], [-71.444658948759,-28.8996731872478],
-      [-71.4949727088974,-28.8746988647543], [-71.4919260742172,-28.8754499154492],
-      [-71.4889799054946,-28.8761178485962], [-71.486023449174,-28.8767859085687],
-      [-71.4829587052106,-28.8772123184463], [-71.4794469962156,-28.8778092759504],
-      [-71.4764193133199,-28.8780724680264], [-71.4735295166883,-28.8789645735721],
-      [-71.4707446839926,-28.8799629531588], [-71.4682280947876,-28.881470594936],
-      [-71.46582818489,-28.8831474674309], [-71.4637206237519,-28.8850535152102],
-      [-71.4615720004512,-28.8869602832482], [-71.4593927716652,-28.8888766003618],
-      [-71.4897447173957,-28.8647816536357], [-71.4867037093298,-28.8644679257222],
-      [-71.4838150293344,-28.865387278336], [-71.4809775148537,-28.8663056288213],
-      [-71.4777073339458,-28.8671326408666], [-71.4746545622524,-28.8676217825157],
-      [-71.4719440916208,-28.8682850089105], [-71.4690331717321,-28.8691413100049],
-      [-71.4640947750281,-28.8709458337767], [-71.4616216063121,-28.8725517925073],
-      [-71.4591477224171,-28.8741306566657], [-71.4568854599376,-28.8759943124132],
-      [-71.4547891649542,-28.877945125506], [-71.4526703928397,-28.8798151228093],
-      [-71.4505534508624,-28.8817662514132], [-71.4484562871965,-28.8836899248852],
-      [-71.4463688697162,-28.8855953479773], [-71.4442809535125,-28.8874827070192],
-      [-71.4421829262748,-28.8893792414097], [-71.4400850337922,-28.8912847650639],
-      [-71.4377561480978,-28.8929598756201], [-71.4359203188285,-28.8946801606344]
-    ];
+    new meteoblueMapsPlugin({
+      mapboxMap: mapboxMap,
+      inventory: inventoryUrl,
+      apiKey: apiKey,
+      canUseRestricted: true,
+    });
 
-    mapboxMap.on('load', () => {
-      turbineCoordinates.forEach((coord, index) => {
-        const el = document.createElement("div");
-        el.className = "custom-marker";
+    // Wind turbine marker
+    // Coordinates for 5 wind turbines
+    const turbineCoordinates = [
+      [-71.5002344203355,-28.8889725800772], 
+      [-71.4975960009844,-28.8905191092847],
+      [-71.4949173777153,-28.8921024206848],
+      [-71.4922360847697,-28.8935774729054],[-71.4896053019279,-28.8950244760898],
+      [-71.4869424120258,-28.8964178943493], [-71.4841103370868,-28.8975978667642],
+      [-71.4805479601135,-28.897816909334],[-71.4776448527838,-28.8986011091843], 
+      [-71.4747510885881,-28.8993489899915],[-71.4718897313291,-28.9001683879492], 
+      [-71.4689755918059,-28.9009255434661],[-71.4660059008111,-28.9015032226647],
+      [-71.4628799434322,-28.9011093605091],[-71.4598746358376,-28.9006139823262],
+      [-71.4569366226783,-28.8999278530416],[-71.4539217566853,-28.8994595784133], 
+      [-71.4508760970803,-28.8994248358158],[-71.4478150199417,-28.8996068247961],
+      [-71.444658948759,-28.8996731872478],[-71.4949727088974,-28.8746988647543],
+      [-71.4919260742172,-28.8754499154492],[-71.4889799054946,-28.8761178485962],
+      [-71.486023449174,-28.8767859085687],[-71.4829587052106,-28.8772123184463], 
+      [-71.4794469962156,-28.8778092759504],[-71.4764193133199,-28.8780724680264], [-71.4735295166883,-28.8789645735721],
+      [-71.4707446839926,-28.8799629531588], [-71.4682280947876,-28.881470594936],[-71.46582818489,-28.8831474674309], 
+      [-71.4637206237519,-28.8850535152102],[-71.4615720004512,-28.8869602832482], [-71.4593927716652,-28.8888766003618],
+      [-71.4897447173957,-28.8647816536357], [-71.4867037093298,-28.8644679257222],[-71.4838150293344,-28.865387278336], 
+      [-71.4809775148537,-28.8663056288213],[-71.4777073339458,-28.8671326408666], [-71.4746545622524,-28.8676217825157],
+      [-71.4719440916208,-28.8682850089105], [-71.4690331717321,-28.8691413100049],[-71.4640947750281,-28.8709458337767], 
+      [-71.4616216063121,-28.8725517925073],[-71.4591477224171,-28.8741306566657], [-71.4568854599376,-28.8759943124132],[-71.4547891649542,-28.877945125506],
+      [-71.4526703928397,-28.8798151228093],[-71.4505534508624,-28.8817662514132], [-71.4484562871965,-28.8836899248852],[-71.4463688697162,-28.8855953479773], 
+      [-71.4442809535125,-28.8874827070192],[-71.4421829262748,-28.8893792414097], [-71.4400850337922,-28.8912847650639],[-71.4377561480978,-28.8929598756201], 
+      [-71.4359203188285,-28.8946801606344] 
+    ];
+    // Add a marker for each turbine
+    turbineCoordinates.forEach((coord, index) => {
+      const el = document.createElement("div");
+      el.className = "custom-marker";
+      
+      new mapboxgl.Marker(el)
+        .setLngLat(coord)
+        .setPopup(new mapboxgl.Popup().setText(`WTG ${index + 1}`))
+        .addTo(mapboxMap);
+    });
 
-        new mapboxgl.Marker(el)
-          .setLngLat(coord)
-          .setPopup(new mapboxgl.Popup().setText(`WTG ${index + 1}`))
-          .addTo(mapboxMap);
-      });
-    });
-  </script>
+  </script>
 </body>
 </html>
